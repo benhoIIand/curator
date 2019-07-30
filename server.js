@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
 
 app.post('/add/:type', async (req, res) => {
   const files = req.params.type === 'movies' ? MOVIE_FILES : TV_FILES;
-  const data = `\n${serialise(req.body)}`;
+  const data = serialise(req.body);
 
   const writes = files.map(file => {
     return appendToFile(file, data);
