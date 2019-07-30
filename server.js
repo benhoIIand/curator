@@ -49,8 +49,9 @@ const serialise = (data) => data
 const getList = async (files) => {
   const reads = files.map(file => readFile(file, {encoding: 'utf8'}));
   const all = await Promise.all(reads);
+  const filtered = uniqBy(all.map(deserialise).flat(), 'title').filter(o => o.displayTitle.length);
 
-  return orderBy(uniqBy(all.map(deserialise).flat(), 'title'), [o => o.displayTitle.toLowerCase()], ['asc']);
+  return orderBy(filtered, [o => o.displayTitle.toLowerCase()], ['asc']);
 };
 
 app.get('/', async (req, res) => {
@@ -67,7 +68,7 @@ app.get('/', async (req, res) => {
 
 app.post('/add/:type', async (req, res) => {
   const files = req.params.type === 'movies' ? MOVIE_FILES : TV_FILES;
-  const data = serialise(req.body);
+  const data = `\n${serialise(req.body)}`;
 
   const writes = files.map(file => {
     return appendToFile(file, data);
