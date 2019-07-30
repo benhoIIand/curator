@@ -1,0 +1,34 @@
+html
+  head
+    title Curator
+    link(rel='stylesheet', type='text/css', href='/styles.css')
+  body
+    .container#movies
+      .content
+        div.loader
+        div.header
+          span.heading="Movies"
+          button#save_movies="Save"
+        div.add
+          input.add-field(placeholder="Add a new item")
+          button#add_movie="+"
+        .list
+          each item in movies
+            .list-item
+              .title= item.displayTitle
+              input.checkbox(type="checkbox", checked=item.selected, data-title=item.title)
+    .container#tv
+      .content
+        div.loader
+        div.header
+          span.heading="TV Shows"
+          button#save_tv="Save"
+        div.add
+          input.add-field(placeholder="Add a new item")
+          button#add_tv="+"
+        .list
+          each item in tv
+            .list-item
+              .title= item.displayTitle
+              input.checkbox(type="checkbox", checked=item.selected, data-title=item.title)
+    script(src="/main.js")
